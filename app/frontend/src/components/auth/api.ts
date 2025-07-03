@@ -1,7 +1,7 @@
 const API_URL = 'http://localhost:5000';
 
 export const authApi = {
-  login: async (credentials: { email: string; password: string }) => {
+  login: async (credentials: { identifier: string; password: string }) => {
     const response = await fetch(`${API_URL}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -10,7 +10,7 @@ export const authApi = {
     return response.json();
   },
 
-  signup: async (userData: { email: string; password: string; name: string }) => {
+  signup: async (userData: { username: string; email: string; password: string }) => {
     const response = await fetch(`${API_URL}/auth/signup`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

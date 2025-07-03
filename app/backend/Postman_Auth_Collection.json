@@ -1,0 +1,58 @@
+{
+  "info": {
+    "_postman_id": "12345678-1234-1234-1234-1234567890ab",
+    "name": "Prok Auth API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Signup",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"testuser\",\n  \"email\": \"test@example.com\",\n  \"password\": \"TestPass123!\"\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:5000/api/signup",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "5000",
+          "path": ["api", "signup"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"identifier\": \"testuser\",\n  \"password\": \"TestPass123!\"\n}"
+        },
+        "description": "Login with either username or email as 'identifier'.",
+        "url": {
+          "raw": "http://127.0.0.1:5000/api/login",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "5000",
+          "path": ["api", "login"]
+        }
+      },
+      "response": []
+    }
+  ]
+} 
