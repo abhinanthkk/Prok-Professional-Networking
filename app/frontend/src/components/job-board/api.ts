@@ -1,31 +1,19 @@
-const API_URL = 'http://localhost:5000';
+import { api } from '../../services/api';
 
 export const jobsApi = {
-  getJobs: async () => {
-    const response = await fetch(`${API_URL}/jobs`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-    return response.json();
+  getJobs: async (page: number = 1, per_page: number = 10) => {
+    return api.getJobs(page, per_page);
   },
 
   getJob: async (jobId: number) => {
-    const response = await fetch(`${API_URL}/jobs/${jobId}`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-    return response.json();
+    return api.getJob(jobId);
   },
 
-  applyForJob: async (jobId: number) => {
-    const response = await fetch(`${API_URL}/jobs/${jobId}/apply`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-    return response.json();
+  applyForJob: async (jobId: number, coverLetter?: string) => {
+    return api.applyForJob(jobId, coverLetter);
+  },
+
+  createJob: async (jobData: any) => {
+    return api.createJob(jobData);
   },
 }; 

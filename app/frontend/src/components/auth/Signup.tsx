@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useTheme } from '../../App';
 
 const API_URL = 'http://localhost:5000';
 
@@ -13,7 +12,6 @@ const Signup: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState('');
   const navigate = useNavigate();
-  const { theme } = useTheme();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,14 +48,14 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className={`max-w-md w-full space-y-8 p-8 rounded-lg shadow-lg backdrop-blur-md ${theme === 'dark' ? 'bg-gradient-to-br from-indigo-900/80 via-gray-900/80 to-purple-900/80 text-white' : 'bg-gradient-to-br from-pink-200/80 via-yellow-100/80 to-blue-200/80 text-gray-900'}`}>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-200 via-yellow-100 to-blue-200 text-gray-900 transition-colors duration-500">
+      <div className="max-w-md w-full space-y-8 p-8 rounded-lg shadow-lg backdrop-blur-md">
         <div className="flex justify-between items-center mb-2">
-          <h2 className={`text-3xl font-bold text-center ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Sign Up</h2>
+          <h2 className="text-3xl font-bold text-center text-gray-900">Sign Up</h2>
         </div>
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="username" className={`block text-sm font-medium ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'}`}>Username</label>
+            <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
             <input
               id="username"
               name="username"
@@ -65,12 +63,12 @@ const Signup: React.FC = () => {
               autoComplete="username"
               value={username}
               onChange={e => setUsername(e.target.value)}
-              className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 ${theme === 'dark' ? 'bg-gray-700 text-white border-gray-600' : 'bg-white text-gray-900 border-gray-300'}`}
+              className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-white text-gray-900 border-gray-300"
               required
             />
           </div>
           <div>
-            <label htmlFor="email" className={`block text-sm font-medium ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'}`}>Email</label>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
             <input
               id="email"
               name="email"
@@ -78,12 +76,12 @@ const Signup: React.FC = () => {
               autoComplete="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
-              className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 ${theme === 'dark' ? 'bg-gray-700 text-white border-gray-600' : 'bg-white text-gray-900 border-gray-300'}`}
+              className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-white text-gray-900 border-gray-300"
               required
             />
           </div>
           <div>
-            <label htmlFor="password" className={`block text-sm font-medium ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'}`}>Password</label>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
             <input
               id="password"
               name="password"
@@ -91,12 +89,12 @@ const Signup: React.FC = () => {
               autoComplete="new-password"
               value={password}
               onChange={e => setPassword(e.target.value)}
-              className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 ${theme === 'dark' ? 'bg-gray-700 text-white border-gray-600' : 'bg-white text-gray-900 border-gray-300'}`}
+              className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-white text-gray-900 border-gray-300"
               required
             />
           </div>
           <div>
-            <label htmlFor="confirmPassword" className={`block text-sm font-medium ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'}`}>Confirm Password</label>
+            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">Confirm Password</label>
             <input
               id="confirmPassword"
               name="confirmPassword"
@@ -104,7 +102,7 @@ const Signup: React.FC = () => {
               autoComplete="new-password"
               value={confirmPassword}
               onChange={e => setConfirmPassword(e.target.value)}
-              className={`mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 ${theme === 'dark' ? 'bg-gray-700 text-white border-gray-600' : 'bg-white text-gray-900 border-gray-300'}`}
+              className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 bg-white text-gray-900 border-gray-300"
               required
             />
           </div>
@@ -119,7 +117,7 @@ const Signup: React.FC = () => {
           </button>
         </form>
         <div className="text-center text-sm mt-4">
-          <span className={theme === 'dark' ? 'text-gray-200' : 'text-gray-700'}>Already have an account?</span>{' '}
+          <span className="text-gray-700">Already have an account?</span>{' '}
           <Link
             to="/login"
             className="text-indigo-400 font-semibold transition-colors duration-300 hover:text-pink-400 hover:underline animate-pulse"

@@ -52,105 +52,126 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-      {/* Cover Image Placeholder */}
-      <div className="h-32 bg-gradient-to-r from-blue-500 to-purple-600"></div>
+      {/* Cover Image */}
+      <div className="relative h-48 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600">
+        {/* Cover image overlay with pattern */}
+        <div className="absolute inset-0 bg-black bg-opacity-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black bg-opacity-20"></div>
+        
+        {/* Edit cover button for own profile */}
+        {isOwnProfile && (
+          <button className="absolute top-4 right-4 bg-white bg-opacity-20 backdrop-blur-sm text-white p-2 rounded-full hover:bg-opacity-30 transition-all">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+            </svg>
+          </button>
+        )}
+      </div>
       
       {/* Profile Info */}
       <div className="relative px-6 pb-6">
         {/* Avatar */}
         <div className="flex justify-center sm:justify-start">
-          <div className="relative -mt-16">
-            <img
-              src={profile.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&size=128&background=3B82F6&color=fff`}
-              alt={user.name}
-              className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover"
-            />
-            {isOwnProfile && (
-              <button className="absolute bottom-0 right-0 bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition-colors">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                </svg>
-              </button>
-            )}
+          <div className="relative -mt-20">
+            <div className="relative">
+              <img
+                src={profile.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&size=160&background=3B82F6&color=fff&font-size=0.4`}
+                alt={user.name}
+                className="w-40 h-40 rounded-full border-4 border-white shadow-lg object-cover bg-gray-100"
+              />
+              {isOwnProfile && (
+                <button className="absolute bottom-2 right-2 bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition-colors shadow-lg">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                  </svg>
+                </button>
+              )}
+            </div>
           </div>
         </div>
 
         {/* User Info */}
-        <div className="mt-4 text-center sm:text-left">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">{user.name}</h1>
-              <p className="text-lg text-gray-600 mt-1">{profile.title}</p>
-              <div className="flex items-center justify-center sm:justify-start mt-2 text-gray-500">
-                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                <span className="text-sm">{profile.location}</span>
+        <div className="mt-6 text-center sm:text-left">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between">
+            <div className="flex-1">
+              <h1 className="text-3xl font-bold text-gray-900">{user.name}</h1>
+              <p className="text-xl text-gray-600 mt-1">{profile.title || 'Professional'}</p>
+              
+              {/* Location and Join Date */}
+              <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 mt-3 text-gray-500">
+                {profile.location && (
+                  <div className="flex items-center justify-center sm:justify-start">
+                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <span className="text-sm">{profile.location}</span>
+                  </div>
+                )}
+                <div className="flex items-center justify-center sm:justify-start mt-1 sm:mt-0">
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <span className="text-sm">Joined {formatDate(user.created_at)}</span>
+                </div>
               </div>
-              <div className="flex items-center justify-center sm:justify-start mt-1 text-gray-500">
-                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                <span className="text-sm">Joined {formatDate(user.created_at)}</span>
+
+              {/* Connection Stats */}
+              <div className="flex justify-center sm:justify-start mt-4 space-x-6 text-sm text-gray-600">
+                <div className="flex items-center">
+                  <span className="font-semibold text-gray-900">{profile.connections_count}</span>
+                  <span className="ml-1">connections</span>
+                </div>
+                {!isOwnProfile && profile.mutual_connections > 0 && (
+                  <div className="flex items-center">
+                    <span className="font-semibold text-gray-900">{profile.mutual_connections}</span>
+                    <span className="ml-1">mutual</span>
+                  </div>
+                )}
               </div>
+
+              {/* Social Links */}
+              {Object.keys(profile.social_links).some(key => profile.social_links[key as keyof typeof profile.social_links]) && (
+                <div className="flex justify-center sm:justify-start mt-4 space-x-3">
+                  {Object.entries(profile.social_links).map(([platform, url]) => (
+                    url && (
+                      <a
+                        key={platform}
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 text-gray-400 hover:text-gray-600 transition-colors bg-gray-50 rounded-full hover:bg-gray-100"
+                        title={`${platform.charAt(0).toUpperCase() + platform.slice(1)}`}
+                      >
+                        {getSocialIcon(platform)}
+                      </a>
+                    )
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Action Buttons */}
-            <div className="mt-4 sm:mt-0 flex flex-col sm:flex-row gap-2">
+            <div className="mt-6 sm:mt-0 flex flex-col sm:flex-row gap-3">
               {isOwnProfile ? (
                 <button
                   onClick={onEditClick}
-                  className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+                  className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors font-medium"
                 >
                   Edit Profile
                 </button>
               ) : (
                 <>
-                  <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
+                  <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors font-medium">
                     Connect
                   </button>
-                  <button className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors">
+                  <button className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors font-medium">
                     Message
                   </button>
                 </>
               )}
             </div>
           </div>
-
-          {/* Connection Stats */}
-          <div className="flex justify-center sm:justify-start mt-4 space-x-6 text-sm text-gray-600">
-            <div className="flex items-center">
-              <span className="font-semibold text-gray-900">{profile.connections_count}</span>
-              <span className="ml-1">connections</span>
-            </div>
-            {!isOwnProfile && profile.mutual_connections > 0 && (
-              <div className="flex items-center">
-                <span className="font-semibold text-gray-900">{profile.mutual_connections}</span>
-                <span className="ml-1">mutual</span>
-              </div>
-            )}
-          </div>
-
-          {/* Social Links */}
-          {Object.keys(profile.social_links).length > 0 && (
-            <div className="flex justify-center sm:justify-start mt-4 space-x-3">
-              {Object.entries(profile.social_links).map(([platform, url]) => (
-                url && (
-                  <a
-                    key={platform}
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
-                    title={`${platform.charAt(0).toUpperCase() + platform.slice(1)}`}
-                  >
-                    {getSocialIcon(platform)}
-                  </a>
-                )
-              ))}
-            </div>
-          )}
         </div>
       </div>
     </div>

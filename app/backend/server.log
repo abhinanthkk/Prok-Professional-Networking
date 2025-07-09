@@ -1,0 +1,79 @@
+nohup: ignoring input
+✅ Database tables created successfully!
+ * Serving Flask app 'main'
+ * Debug mode: on
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 954-570-372
+127.0.0.1 - - [09/Jul/2025 11:15:19] "OPTIONS /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:15:19] "OPTIONS /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:15:19] "GET /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:15:19] "GET /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:23:44] "[31m[1mGET /api/profile HTTP/1.1[0m" 422 -
+127.0.0.1 - - [09/Jul/2025 11:26:32] "[35m[1mOPTIONS /auth/signup HTTP/1.1[0m" 204 -
+127.0.0.1 - - [09/Jul/2025 11:26:32] "[35m[1mPOST /auth/signup HTTP/1.1[0m" 201 -
+127.0.0.1 - - [09/Jul/2025 11:26:45] "[35m[1mOPTIONS /auth/login HTTP/1.1[0m" 204 -
+127.0.0.1 - - [09/Jul/2025 11:26:45] "POST /auth/login HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:26:45] "OPTIONS /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:26:45] "OPTIONS /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:26:45] "GET /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:26:45] "GET /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:26:54] "OPTIONS /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:26:54] "OPTIONS /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:26:54] "GET /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:26:54] "GET /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:26:58] "OPTIONS /api/profile/image HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:26:59] "POST /api/profile/image HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:26:59] "GET /api/profile_images/1752040618_3ebad06c_main.webp HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:28:41] "OPTIONS /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:28:41] "PUT /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:28:49] "OPTIONS /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:28:49] "OPTIONS /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:28:49] "GET /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:28:49] "GET /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:28:49] "[36mGET /api/profile_images/1752040618_3ebad06c_main.webp HTTP/1.1[0m" 304 -
+127.0.0.1 - - [09/Jul/2025 11:29:43] "OPTIONS /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:29:43] "OPTIONS /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:29:43] "GET /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:29:43] "GET /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:29:43] "[36mGET /api/profile_images/1752040618_3ebad06c_main.webp HTTP/1.1[0m" 304 -
+127.0.0.1 - - [09/Jul/2025 11:29:54] "OPTIONS /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:29:54] "OPTIONS /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:29:54] "GET /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:29:54] "GET /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:29:54] "[36mGET /api/profile_images/1752040618_3ebad06c_main.webp HTTP/1.1[0m" 304 -
+ * Detected change in '/home/abhinanth/Prok-Professional-Networking/app/backend/api/profile.py', reloading
+✅ Database tables created successfully!
+Full incoming profile update payload: {'name': 'Abeee', 'username': 'Abee', 'email': 'abee@gmail.com', 'bio': 'onum illla', 'location': 'eng aoru', 'title': 'yes', 'website': '', 'linkedin': '', 'github': '', 'twitter': '', 'skills': ['ja', 'py', 'node'], 'experience': [{'id': 1752040679514, 'title': 'no', 'company': 'yes', 'start_date': '2025-07-01', 'end_date': '', 'description': 'asdfasd', 'current': True}], 'education': [{'id': 1752040700862, 'school': 'nmhss', 'degree': 'be', 'field': 'ece', 'start_date': '2025-07-01', 'end_date': '2025-07-10', 'current': False}]}
+Incoming skills: ['ja', 'py', 'node']
+Incoming experience: [{'id': 1752040679514, 'title': 'no', 'company': 'yes', 'start_date': '2025-07-01', 'end_date': '', 'description': 'asdfasd', 'current': True}]
+Incoming education: [{'id': 1752040700862, 'school': 'nmhss', 'degree': 'be', 'field': 'ece', 'start_date': '2025-07-01', 'end_date': '2025-07-10', 'current': False}]
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 954-570-372
+ * Detected change in '/home/abhinanth/Prok-Professional-Networking/app/backend/api/profile.py', reloading
+✅ Database tables created successfully!
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 954-570-372
+127.0.0.1 - - [09/Jul/2025 11:32:30] "OPTIONS /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:32:30] "GET /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:32:46] "[31m[1mGET /api/profile HTTP/1.1[0m" 422 -
+127.0.0.1 - - [09/Jul/2025 11:33:45] "OPTIONS /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:33:45] "GET /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:33:58] "OPTIONS /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:33:58] "GET /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:34:59] "OPTIONS /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:34:59] "GET /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:35:05] "OPTIONS /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:35:05] "GET /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:35:16] "OPTIONS /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:35:16] "GET /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:35:48] "OPTIONS /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:35:48] "OPTIONS /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:35:48] "GET /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:35:48] "GET /api/profile HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jul/2025 11:35:48] "[36mGET /api/profile_images/1752040618_3ebad06c_main.webp HTTP/1.1[0m" 304 -

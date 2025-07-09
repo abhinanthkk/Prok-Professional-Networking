@@ -1,34 +1,15 @@
-const API_URL = 'http://localhost:5000';
+import { api } from '../../services/api';
 
 export const postsApi = {
   createPost: async (content: string) => {
-    const response = await fetch(`${API_URL}/posts`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: JSON.stringify({ content }),
-    });
-    return response.json();
+    return api.createPost(content);
   },
 
-  getPosts: async () => {
-    const response = await fetch(`${API_URL}/posts`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-    return response.json();
+  getPosts: async (page: number = 1, per_page: number = 10) => {
+    return api.getPosts(page, per_page);
   },
 
   likePost: async (postId: number) => {
-    const response = await fetch(`${API_URL}/posts/${postId}/like`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-    return response.json();
+    return api.likePost(postId);
   },
 }; 

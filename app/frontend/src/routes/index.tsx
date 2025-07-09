@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
+import Layout from '../components/layout/Layout';
 import Login from '../components/auth/Login';
 import Signup from '../components/auth/Signup';
 import ProfileView from '../components/profile/ProfileView';
@@ -8,6 +9,7 @@ import PostList from '../components/posts/PostList';
 import Feed from '../components/feed/Feed';
 import JobList from '../components/job-board/JobList';
 import MessageList from '../components/messaging/MessageList';
+import NotFound from '../components/NotFound';
 
 export const router = createBrowserRouter([
   {
@@ -23,27 +25,41 @@ export const router = createBrowserRouter([
     element: <Signup />,
   },
   {
-    path: '/profile',
-    element: <ProfileView />,
-  },
-  {
-    path: '/profile/edit',
-    element: <ProfileEdit />,
-  },
-  {
-    path: '/posts/create',
-    element: <PostCreate />,
-  },
-  {
-    path: '/posts',
-    element: <PostList />,
-  },
-  {
-    path: '/jobs',
-    element: <JobList />,
-  },
-  {
-    path: '/messages',
-    element: <MessageList />,
+    path: '/',
+    element: <Layout />,
+    children: [
+      {
+        path: 'profile',
+        element: <ProfileView />,
+      },
+      {
+        path: 'profile/edit',
+        element: <ProfileEdit />,
+      },
+      {
+        path: 'posts/create',
+        element: <PostCreate />,
+      },
+      {
+        path: 'posts',
+        element: <PostList />,
+      },
+      {
+        path: 'feed',
+        element: <Feed />,
+      },
+      {
+        path: 'jobs',
+        element: <JobList />,
+      },
+      {
+        path: 'messages',
+        element: <MessageList />,
+      },
+      {
+        path: '*',
+        element: <NotFound />,
+      },
+    ],
   },
 ]); 

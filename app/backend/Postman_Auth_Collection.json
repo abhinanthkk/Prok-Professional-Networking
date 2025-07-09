@@ -1,0 +1,225 @@
+{
+  "info": {
+    "_postman_id": "b1e2c3d4-5678-1234-9abc-def012345678",
+    "name": "Prok Backend Profile API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"yourpassword\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/auth/login",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["auth", "login"]
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// Automatically set jwt variable from login response",
+              "if (pm.response.code === 200) {",
+              "  var json = pm.response.json();",
+              "  if (json.access_token) {",
+              "    pm.collectionVariables.set('jwt', json.access_token);",
+              "    pm.environment.set('jwt', json.access_token);",
+              "  }",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get Profile (Current User)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt}}" }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/api/profile",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "profile"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Profile (By Email)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/profile/{{email}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["profile", "{{email}}"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Profile",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{jwt}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"bio\": \"Updated bio\",\n  \"location\": \"New York\",\n  \"title\": \"Software Engineer\",\n  \"website\": \"https://example.com\",\n  \"linkedin\": \"https://linkedin.com/in/example\",\n  \"github\": \"https://github.com/example\",\n  \"twitter\": \"https://twitter.com/example\",\n  \"phone\": \"1234567890\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/profile",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "profile"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Upload Profile Image",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt}}" }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "image",
+              "type": "file",
+              "src": ""
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/profile/image",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "profile", "image"]
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// Automatically set avatar_url variable from image upload response",
+              "if (pm.response.code === 200) {",
+              "  var json = pm.response.json();",
+              "  if (json.image_url) {",
+              "    pm.collectionVariables.set('avatar_url', json.image_url);",
+              "    pm.environment.set('avatar_url', json.image_url);",
+              "  }",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Fetch Profile Image",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt}}" }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/profile/image",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["profile", "image"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Signup",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\",\n  \"username\": \"testuser\",\n  \"password\": \"yourpassword\",\n  \"confirm_password\": \"yourpassword\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/auth/signup",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["auth", "signup"]
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// Automatically set jwt variable from signup response",
+              "if (pm.response.code === 201) {",
+              "  var json = pm.response.json();",
+              "  if (json.access_token) {",
+              "    pm.collectionVariables.set('jwt', json.access_token);",
+              "    pm.environment.set('jwt', json.access_token);",
+              "  }",
+              "}"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": []
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": []
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "jwt",
+      "value": ""
+    }
+  ]
+} 

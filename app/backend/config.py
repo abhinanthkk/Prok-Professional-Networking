@@ -15,3 +15,8 @@ class Config:
     
     # CORS
     CORS_HEADERS = 'Content-Type' 
+    
+    # File Uploads
+    UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER', os.path.join(os.path.dirname(__file__), 'profile_images'))
+    ALLOWED_IMAGE_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+    MAX_CONTENT_LENGTH = 5 * 1024 * 1024  # 5MB 

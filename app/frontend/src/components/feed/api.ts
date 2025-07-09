@@ -1,21 +1,11 @@
-const API_URL = 'http://localhost:5000';
+import { api } from '../../services/api';
 
 export const feedApi = {
-  getFeed: async () => {
-    const response = await fetch(`${API_URL}/feed`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-    return response.json();
+  getFeed: async (page: number = 1, per_page: number = 10) => {
+    return api.getFeed(page, per_page);
   },
 
-  getFeedByUser: async (userId: number) => {
-    const response = await fetch(`${API_URL}/feed/user/${userId}`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-    return response.json();
+  getFeedByUser: async (userId: number, page: number = 1, per_page: number = 10) => {
+    return api.getUserFeed(userId, page, per_page);
   },
 }; 

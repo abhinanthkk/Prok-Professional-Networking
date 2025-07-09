@@ -5,7 +5,19 @@
 /* Custom styles can be added below */
 @layer base {
   body {
-    @apply text-gray-900 bg-white dark:bg-gray-900 dark:text-white;
+    @apply text-gray-900 bg-white;
+  }
+  
+  /* Improve placeholder text contrast */
+  input::placeholder,
+  textarea::placeholder {
+    @apply text-gray-600;
+  }
+  
+  /* Ensure input text is dark and readable */
+  input,
+  textarea {
+    @apply text-gray-900;
   }
 }
 

@@ -1,21 +1,11 @@
-const API_URL = 'http://localhost:5000';
+import { api } from '../../services/api';
 
 export const authApi = {
   login: async (credentials: { email: string; password: string }) => {
-    const response = await fetch(`${API_URL}/auth/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(credentials),
-    });
-    return response.json();
+    return api.login(credentials);
   },
 
-  signup: async (userData: { email: string; password: string; name: string }) => {
-    const response = await fetch(`${API_URL}/auth/signup`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(userData),
-    });
-    return response.json();
+  signup: async (userData: { email: string; password: string; username: string; confirm_password: string }) => {
+    return api.signup(userData);
   },
 }; 

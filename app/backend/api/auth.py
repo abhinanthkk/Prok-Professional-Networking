@@ -3,9 +3,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token
 from models.user import User, db
 from datetime import timedelta
+from models.profile import Profile
 
 auth_bp = Blueprint('auth', __name__)
-
+ 
 @auth_bp.route('/auth/signup', methods=['POST', 'OPTIONS'])
 def signup():
     if request.method == 'OPTIONS':
@@ -24,6 +25,10 @@ def signup():
     hashed_password = generate_password_hash(password)
     user = User(email=email, username=username, name=username, password_hash=hashed_password)
     db.session.add(user)
+    db.session.flush()  # Get the user ID
+    # Auto-create blank profile for new user
+    profile = Profile(user_id=user.id)
+    db.session.add(profile)
     db.session.commit()
     access_token = create_access_token(identity=email, expires_delta=timedelta(hours=1))
     return jsonify({'access_token': access_token}), 201

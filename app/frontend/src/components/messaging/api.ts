@@ -1,33 +1,19 @@
-const API_URL = 'http://localhost:5000';
+import { api } from '../../services/api';
 
 export const messagingApi = {
   getConversations: async () => {
-    const response = await fetch(`${API_URL}/messages/conversations`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-    return response.json();
+    return api.getConversations();
   },
 
   getMessages: async (conversationId: number) => {
-    const response = await fetch(`${API_URL}/messages/${conversationId}`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-    return response.json();
+    return api.getMessages(conversationId);
   },
 
   sendMessage: async (conversationId: number, content: string) => {
-    const response = await fetch(`${API_URL}/messages/${conversationId}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: JSON.stringify({ content }),
-    });
-    return response.json();
+    return api.sendMessage(conversationId, content);
+  },
+
+  createConversation: async (userId: number) => {
+    return api.createConversation(userId);
   },
 }; 
