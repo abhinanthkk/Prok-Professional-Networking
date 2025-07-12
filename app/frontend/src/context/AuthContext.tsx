@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           });
         } catch {
           setUser(null);
-        }
+    }
       }
     };
     fetchProfile();

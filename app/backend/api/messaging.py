@@ -6,7 +6,7 @@ from models import db
 from datetime import datetime
 
 messaging_bp = Blueprint('messaging', __name__)
-
+ 
 @messaging_bp.route('/messages/conversations', methods=['GET'])
 @jwt_required()
 def get_conversations():

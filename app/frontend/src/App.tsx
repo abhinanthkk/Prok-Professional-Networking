@@ -8,8 +8,8 @@ function App() {
   return (
     <AuthProvider>
       <div className="min-h-screen w-full bg-gradient-to-br from-pink-200 via-yellow-100 to-blue-200 transition-colors duration-500">
-        <RouterProvider router={router} />
-      </div>
+      <RouterProvider router={router} />
+        </div>
     </AuthProvider>
   );
 }

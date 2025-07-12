@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000';
+export const API_URL = 'http://localhost:5000';
 
 // Helper function to handle API responses
 const handleResponse = async (response: Response) => {
@@ -17,6 +17,21 @@ const getAuthHeaders = () => {
     ...(token && { 'Authorization': `Bearer ${token}` })
   };
 };
+
+export interface PostCreateResponse {
+  id: number;
+  content: string;
+  media_url?: string;
+  user_id: number;
+  created_at: string;
+  likes_count: number;
+  comments_count: number;
+  user: {
+    id: number;
+    name: string;
+    username: string;
+  };
+}
 
 export const api = {
   // Auth endpoints
@@ -71,12 +86,37 @@ export const api = {
   },
 
   // Posts endpoints
-  createPost: async (content: string) => {
-    const response = await fetch(`${API_URL}/posts`, {
-      method: 'POST',
-      headers: getAuthHeaders(),
-      body: JSON.stringify({ content }),
-    });
+  createPost: async (content: string, media?: File, options?: { allow_comments?: boolean; is_public?: boolean; title?: string }): Promise<PostCreateResponse> => {
+    const token = localStorage.getItem('token');
+    let response;
+    if (media) {
+      const formData = new FormData();
+      formData.append('content', content);
+      formData.append('media', media);
+      if (options?.allow_comments !== undefined) formData.append('allow_comments', String(options.allow_comments));
+      if (options?.is_public !== undefined) formData.append('is_public', String(options.is_public));
+      if (options?.title !== undefined) formData.append('title', options.title);
+      response = await fetch(`${API_URL}/posts`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+        body: formData,
+      });
+    } else {
+      const body: any = { content };
+      if (options?.allow_comments !== undefined) body.allow_comments = options.allow_comments;
+      if (options?.is_public !== undefined) body.is_public = options.is_public;
+      if (options?.title !== undefined) body.title = options.title;
+      response = await fetch(`${API_URL}/posts`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token && { 'Authorization': `Bearer ${token}` })
+        },
+        body: JSON.stringify(body),
+      });
+    }
     return handleResponse(response);
   },
 

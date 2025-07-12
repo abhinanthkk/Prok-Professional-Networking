@@ -83,7 +83,7 @@ const ProfileView: React.FC = () => {
     };
 
     if (token) {
-      fetchProfileData();
+    fetchProfileData();
     } else {
       setError('Please login to view profile');
       setIsLoading(false);
@@ -213,7 +213,7 @@ const ProfileView: React.FC = () => {
         <div className="bg-white rounded-xl shadow p-6 border border-gray-100">
           <h3 className="text-lg font-semibold text-gray-900 mb-2">Connections</h3>
           <p className="text-gray-600">Connections preview coming soon.</p>
-        </div>
+          </div>
       </main>
 
       {/* Right Sidebar */}
@@ -227,7 +227,7 @@ const ProfileView: React.FC = () => {
               <div>
                 <p className="font-medium text-gray-800">John Smith</p>
                 <p className="text-gray-500 text-xs">Product Manager</p>
-              </div>
+          </div>
               <button className="ml-auto bg-[#0a66c2] text-white px-3 py-1 rounded-full text-xs">Connect</button>
             </li>
             {/* Add more suggestions here */}
@@ -236,7 +236,7 @@ const ProfileView: React.FC = () => {
         <div>
           <h4 className="text-md font-semibold text-gray-900 mb-2">Job Alerts</h4>
           <div className="bg-[#eaf4fb] rounded-lg p-3 text-[#0a66c2]">3 new jobs for you</div>
-        </div>
+      </div>
       </aside>
     </div>
   );

@@ -10,6 +10,7 @@ import Feed from '../components/feed/Feed';
 import JobList from '../components/job-board/JobList';
 import MessageList from '../components/messaging/MessageList';
 import NotFound from '../components/NotFound';
+import PostDetail from '../components/posts/PostDetail';
 
 export const router = createBrowserRouter([
   {
@@ -30,31 +31,39 @@ export const router = createBrowserRouter([
     children: [
       {
         path: 'profile',
-        element: <ProfileView />,
-      },
-      {
+    element: <ProfileView />,
+  },
+  {
         path: 'profile/edit',
-        element: <ProfileEdit />,
-      },
-      {
+    element: <ProfileEdit />,
+  },
+  {
         path: 'posts/create',
+    element: <PostCreate />,
+  },
+  {
+        path: 'posts',
+    element: <PostList />,
+  },
+  {
+        path: 'create-post',
         element: <PostCreate />,
       },
-      {
-        path: 'posts',
-        element: <PostList />,
-      },
-      {
+  {
         path: 'feed',
         element: <Feed />,
       },
       {
         path: 'jobs',
-        element: <JobList />,
+    element: <JobList />,
+  },
+  {
+        path: 'messages',
+    element: <MessageList />,
       },
       {
-        path: 'messages',
-        element: <MessageList />,
+        path: 'posts/:id',
+        element: <PostDetail />,
       },
       {
         path: '*',

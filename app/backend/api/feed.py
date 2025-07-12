@@ -5,7 +5,7 @@ from models.user import User
 from models import db
 
 feed_bp = Blueprint('feed', __name__)
-
+ 
 @feed_bp.route('/feed', methods=['GET'])
 @jwt_required()
 def get_feed():
@@ -30,6 +30,7 @@ def get_feed():
         posts_data.append({
             'id': post.id,
             'content': post.content,
+            'media_url': post.media_url,
             'user_id': post.user_id,
             'created_at': post.created_at.isoformat(),
             'likes_count': post.likes_count,

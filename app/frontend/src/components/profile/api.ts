@@ -40,5 +40,14 @@ export const profileApi = {
   rejectConnectionRequest: async (requestId: string) => {
     // This endpoint needs to be implemented in the backend
     throw new Error('Connection requests not implemented yet');
+  },
+
+  followUser: async (userId: string) => {
+    // TODO: Implement backend endpoint and call it here
+    throw new Error('Follow user endpoint not implemented yet');
+  },
+  unfollowUser: async (userId: string) => {
+    // TODO: Implement backend endpoint and call it here
+    throw new Error('Unfollow user endpoint not implemented yet');
   }
 }; 

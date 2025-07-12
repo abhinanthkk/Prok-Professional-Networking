@@ -74,18 +74,11 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
         <div className="flex justify-center sm:justify-start">
           <div className="relative -mt-20">
             <div className="relative">
-              <img
+            <img
                 src={profile.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&size=160&background=3B82F6&color=fff&font-size=0.4`}
-                alt={user.name}
+              alt={user.name}
                 className="w-40 h-40 rounded-full border-4 border-white shadow-lg object-cover bg-gray-100"
-              />
-              {isOwnProfile && (
-                <button className="absolute bottom-2 right-2 bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition-colors shadow-lg">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                  </svg>
-                </button>
-              )}
+            />
             </div>
           </div>
         </div>
@@ -102,53 +95,53 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
                 {profile.location && (
                   <div className="flex items-center justify-center sm:justify-start">
                     <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    <span className="text-sm">{profile.location}</span>
-                  </div>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span className="text-sm">{profile.location}</span>
+              </div>
                 )}
                 <div className="flex items-center justify-center sm:justify-start mt-1 sm:mt-0">
                   <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  <span className="text-sm">Joined {formatDate(user.created_at)}</span>
-                </div>
-              </div>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span className="text-sm">Joined {formatDate(user.created_at)}</span>
+            </div>
+          </div>
 
-              {/* Connection Stats */}
-              <div className="flex justify-center sm:justify-start mt-4 space-x-6 text-sm text-gray-600">
-                <div className="flex items-center">
-                  <span className="font-semibold text-gray-900">{profile.connections_count}</span>
-                  <span className="ml-1">connections</span>
-                </div>
-                {!isOwnProfile && profile.mutual_connections > 0 && (
-                  <div className="flex items-center">
-                    <span className="font-semibold text-gray-900">{profile.mutual_connections}</span>
-                    <span className="ml-1">mutual</span>
-                  </div>
-                )}
+          {/* Connection Stats */}
+          <div className="flex justify-center sm:justify-start mt-4 space-x-6 text-sm text-gray-600">
+            <div className="flex items-center">
+              <span className="font-semibold text-gray-900">{profile.connections_count}</span>
+              <span className="ml-1">connections</span>
+            </div>
+            {!isOwnProfile && profile.mutual_connections > 0 && (
+              <div className="flex items-center">
+                <span className="font-semibold text-gray-900">{profile.mutual_connections}</span>
+                <span className="ml-1">mutual</span>
               </div>
+            )}
+          </div>
 
-              {/* Social Links */}
+          {/* Social Links */}
               {Object.keys(profile.social_links).some(key => profile.social_links[key as keyof typeof profile.social_links]) && (
-                <div className="flex justify-center sm:justify-start mt-4 space-x-3">
-                  {Object.entries(profile.social_links).map(([platform, url]) => (
-                    url && (
-                      <a
-                        key={platform}
-                        href={url}
-                        target="_blank"
-                        rel="noopener noreferrer"
+            <div className="flex justify-center sm:justify-start mt-4 space-x-3">
+              {Object.entries(profile.social_links).map(([platform, url]) => (
+                url && (
+                  <a
+                    key={platform}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
                         className="p-2 text-gray-400 hover:text-gray-600 transition-colors bg-gray-50 rounded-full hover:bg-gray-100"
-                        title={`${platform.charAt(0).toUpperCase() + platform.slice(1)}`}
-                      >
-                        {getSocialIcon(platform)}
-                      </a>
-                    )
-                  ))}
-                </div>
-              )}
+                    title={`${platform.charAt(0).toUpperCase() + platform.slice(1)}`}
+                  >
+                    {getSocialIcon(platform)}
+                  </a>
+                )
+              ))}
+            </div>
+          )}
             </div>
 
             {/* Action Buttons */}

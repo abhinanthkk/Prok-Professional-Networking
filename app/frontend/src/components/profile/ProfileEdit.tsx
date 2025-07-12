@@ -22,9 +22,9 @@ const ProfileEdit: React.FC = () => {
     bio: '',
     location: '',
     title: '',
-    website: '',
-    linkedin: '',
-    github: '',
+      website: '',
+      linkedin: '',
+      github: '',
     twitter: '',
     skills: [] as string[],
     experience: [] as any[],
@@ -100,7 +100,7 @@ const ProfileEdit: React.FC = () => {
         setIsLoading(false);
       }
     };
-
+    
     if (token) {
       fetchProfileData();
     } else {
@@ -303,8 +303,8 @@ const ProfileEdit: React.FC = () => {
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
           <p className="mt-4 text-gray-600">Loading profile...</p>
-        </div>
-      </div>
+                </div>
+            </div>
     );
   }
 
@@ -349,30 +349,30 @@ const ProfileEdit: React.FC = () => {
               </button>
             </div>
           </div>
-        </div>
+          </div>
 
-        {/* Success/Error Messages */}
+            {/* Success/Error Messages */}
         {success && (
           <div className="mb-6 bg-green-50 border border-green-200 rounded-lg p-4">
             <div className="flex">
               <svg className="w-5 h-5 text-green-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
+                  </svg>
               <p className="text-green-800">{success}</p>
-            </div>
-          </div>
-        )}
+                </div>
+              </div>
+            )}
 
         {error && (
           <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4">
             <div className="flex">
               <svg className="w-5 h-5 text-red-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+                  </svg>
               <p className="text-red-800">{error}</p>
-            </div>
-          </div>
-        )}
+                </div>
+              </div>
+            )}
 
         {/* Profile Picture Section */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
@@ -402,7 +402,7 @@ const ProfileEdit: React.FC = () => {
           </div>
         </div>
 
-        {/* Basic Information */}
+            {/* Basic Information */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">Basic Information</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -420,7 +420,7 @@ const ProfileEdit: React.FC = () => {
               <label className="block text-sm font-medium text-gray-700 mb-2">Username</label>
               <input
                 type="text"
-                value={formData.username}
+                  value={formData.username}
                 onChange={(e) => handleInputChange('username', e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Enter username"
@@ -429,23 +429,23 @@ const ProfileEdit: React.FC = () => {
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
               <input
-                type="email"
-                value={formData.email}
+                  type="email"
+                  value={formData.email}
                 onChange={(e) => handleInputChange('email', e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Enter email address"
-              />
-            </div>
+                />
+              </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Professional Title</label>
               <input
                 type="text"
-                value={formData.title}
+                  value={formData.title}
                 onChange={(e) => handleInputChange('title', e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="e.g., Software Engineer"
-              />
-            </div>
+                />
+              </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
               <input
@@ -520,9 +520,9 @@ const ProfileEdit: React.FC = () => {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Bio</label>
             <textarea
-              value={formData.bio}
+                value={formData.bio}
               onChange={(e) => handleInputChange('bio', e.target.value)}
-              rows={4}
+                rows={4}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="Tell others about yourself..."
             />
@@ -575,7 +575,7 @@ const ProfileEdit: React.FC = () => {
               />
             </div>
           </div>
-        </div>
+            </div>
 
         {/* Skills Section */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
@@ -624,19 +624,19 @@ const ProfileEdit: React.FC = () => {
               </span>
             ))}
           </div>
-        </div>
+              </div>
 
         {/* Experience Section */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-semibold text-gray-900">Experience</h2>
-            <button
+                    <button
               onClick={handleExperienceAdd}
               className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
-            >
+                    >
               Add Experience
-            </button>
-          </div>
+                    </button>
+                  </div>
           <div className="space-y-6">
             {formData.experience.map((exp, index) => (
               <div key={exp.id} className="border border-gray-200 rounded-lg p-4">
@@ -708,24 +708,24 @@ const ProfileEdit: React.FC = () => {
                     Remove
                   </button>
                 </div>
-              </div>
-            ))}
+                </div>
+              ))}
           </div>
-        </div>
+            </div>
 
         {/* Education Section */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-gray-900">Education</h2>
-            <button
+                <h2 className="text-xl font-semibold text-gray-900">Education</h2>
+                <button
               onClick={handleEducationAdd}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
-            >
-              Add Education
-            </button>
-          </div>
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+                >
+                  Add Education
+                </button>
+              </div>
           <div className="space-y-6">
-            {formData.education.map((edu, index) => (
+              {formData.education.map((edu, index) => (
               <div key={edu.id} className="border border-gray-200 rounded-lg p-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <div>
@@ -750,13 +750,13 @@ const ProfileEdit: React.FC = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Field of Study</label>
-                    <input
-                      type="text"
-                      value={edu.field}
+                  <input
+                    type="text"
+                    value={edu.field}
                       onChange={(e) => handleEducationUpdate(index, 'field', e.target.value)}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       placeholder="e.g., Computer Science"
-                    />
+                  />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Start Date</label>
@@ -779,15 +779,15 @@ const ProfileEdit: React.FC = () => {
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
-                  <label className="flex items-center">
-                    <input
-                      type="checkbox"
-                      checked={edu.current}
+                    <label className="flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={edu.current}
                       onChange={(e) => handleEducationUpdate(index, 'current', e.target.checked)}
-                      className="mr-2"
-                    />
+                        className="mr-2"
+                      />
                     <span className="text-sm text-gray-800">I currently study here</span>
-                  </label>
+                    </label>
                   <button
                     onClick={() => handleEducationRemove(index)}
                     className="text-red-600 hover:text-red-800 text-sm"
@@ -797,24 +797,24 @@ const ProfileEdit: React.FC = () => {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
+              </div>
+            </div>
 
         {/* Save Button */}
         <div className="flex justify-end space-x-3">
-          <button
+              <button
             onClick={() => navigate('/profile')}
-            className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors"
-          >
-            Cancel
-          </button>
-          <button
+                className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
             onClick={handleSave}
             disabled={isSaving}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
+                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
             {isSaving ? 'Saving...' : 'Save'}
-          </button>
+              </button>
         </div>
       </div>
     </div>
