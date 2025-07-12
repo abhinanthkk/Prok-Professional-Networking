@@ -7,6 +7,7 @@ import ProfileEdit from '../components/profile/ProfileEdit';
 import PostCreate from '../components/posts/PostCreate';
 import PostList from '../components/posts/PostList';
 import Feed from '../components/feed/Feed';
+import LinkedInFeed from '../components/feed/LinkedInFeed';
 import JobList from '../components/job-board/JobList';
 import MessageList from '../components/messaging/MessageList';
 import NotFound from '../components/NotFound';
@@ -49,9 +50,9 @@ export const router = createBrowserRouter([
         path: 'create-post',
         element: <PostCreate />,
       },
-  {
+        {
         path: 'feed',
-        element: <Feed />,
+        element: <LinkedInFeed />,
       },
       {
         path: 'jobs',

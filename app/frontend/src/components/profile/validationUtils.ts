@@ -78,6 +78,58 @@ export const validateUsername = (username: string): boolean => {
   return usernameRegex.test(username) && username.length >= 3 && username.length <= 20;
 };
 
+// Password validation functions
+export const validatePassword = (password: string): { isValid: boolean; message: string } => {
+  if (password.length < 8) {
+    return { isValid: false, message: 'Password must be at least 8 characters long' };
+  }
+  
+  if (!/[A-Z]/.test(password)) {
+    return { isValid: false, message: 'Password must contain at least one uppercase letter' };
+  }
+  
+  if (!/[a-z]/.test(password)) {
+    return { isValid: false, message: 'Password must contain at least one lowercase letter' };
+  }
+  
+  if (!/\d/.test(password)) {
+    return { isValid: false, message: 'Password must contain at least one number' };
+  }
+  
+  if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+    return { isValid: false, message: 'Password must contain at least one special character (!@#$%^&*(),.?":{}|<>)' };
+  }
+  
+  return { isValid: true, message: 'Password is valid' };
+};
+
+export const getPasswordStrength = (password: string): 'weak' | 'medium' | 'strong' => {
+  let score = 0;
+  
+  // Length check
+  if (password.length >= 8) score += 1;
+  if (password.length >= 12) score += 1;
+  
+  // Character variety checks
+  if (/[A-Z]/.test(password)) score += 1;
+  if (/[a-z]/.test(password)) score += 1;
+  if (/\d/.test(password)) score += 1;
+  if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) score += 1;
+  
+  // Additional complexity
+  if (password.length >= 10 && /[A-Z]/.test(password) && /[a-z]/.test(password) && /\d/.test(password) && /[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+    score += 2;
+  }
+  
+  if (score <= 2) return 'weak';
+  if (score <= 4) return 'medium';
+  return 'strong';
+};
+
+export const validatePasswordMatch = (password: string, confirmPassword: string): boolean => {
+  return password === confirmPassword;
+};
+
 export const validateImageFile = (file: File): { isValid: boolean; message: string } => {
   const maxSize = 5 * 1024 * 1024; // 5MB
   const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];

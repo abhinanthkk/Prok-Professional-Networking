@@ -15,7 +15,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 
 # Initialize extensions
-CORS(app, origins=["http://localhost:5173"], allow_headers=["Content-Type", "Authorization"], methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
+CORS(app, origins=["http://localhost:5173", "http://localhost:5174"], allow_headers=["Content-Type", "Authorization"], methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"], supports_credentials=True)
 
 # Import db and models
 from models import db

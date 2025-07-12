@@ -22,6 +22,7 @@ export interface PostCreateResponse {
   id: number;
   content: string;
   media_url?: string;
+  imageUrl?: string;
   user_id: number;
   created_at: string;
   likes_count: number;
@@ -49,6 +50,15 @@ export const api = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(userData),
+    });
+    return handleResponse(response);
+  },
+
+  changePassword: async (passwordData: { current_password: string; new_password: string; confirm_password: string }) => {
+    const response = await fetch(`${API_URL}/auth/change-password`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(passwordData),
     });
     return handleResponse(response);
   },
@@ -140,14 +150,24 @@ export const api = {
     const response = await fetch(`${API_URL}/feed?page=${page}&per_page=${per_page}`, {
       headers: getAuthHeaders(),
     });
-    return handleResponse(response);
+    const data = await handleResponse(response);
+    const posts = (data.posts || []).map((post: any) => ({
+      ...post,
+      media_url: post.imageUrl || post.media_url || null,
+    }));
+    return { ...data, posts };
   },
 
   getUserFeed: async (userId: number, page: number = 1, per_page: number = 10) => {
     const response = await fetch(`${API_URL}/feed/user/${userId}?page=${page}&per_page=${per_page}`, {
       headers: getAuthHeaders(),
     });
-    return handleResponse(response);
+    const data = await handleResponse(response);
+    const posts = (data.posts || []).map((post: any) => ({
+      ...post,
+      media_url: post.imageUrl || post.media_url || null,
+    }));
+    return { ...data, posts };
   },
 
   // Jobs endpoints

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import DefaultAvatar from '../ui/DefaultAvatar';
 
 interface Post {
   id: number;
@@ -9,12 +10,16 @@ interface Post {
     id: number;
     name: string;
     username: string;
+    avatar_url?: string;
+    title?: string;
+    location?: string;
   };
   created_at: string;
 }
 
 const PostDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -44,12 +49,48 @@ const PostDetail: React.FC = () => {
   if (error) return <div className="max-w-xl mx-auto p-8 text-center text-red-600">{error}</div>;
   if (!post) return <div className="max-w-xl mx-auto p-8 text-center">Post not found.</div>;
 
+  const handleUserClick = () => {
+    navigate(`/profile/${post.user?.id}`);
+  };
+
   return (
     <div className="max-w-xl mx-auto bg-white rounded-xl shadow p-8 mt-8">
-      <div className="mb-4">
-        <div className="text-lg font-bold">{post.user?.name || 'User'}</div>
-        <div className="text-gray-500 text-sm">@{post.user?.username} • {new Date(post.created_at).toLocaleString()}</div>
+      {/* User Profile Header */}
+      <div 
+        className="flex items-start mb-6 cursor-pointer hover:opacity-80 transition-opacity"
+        onClick={handleUserClick}
+      >
+        {post.user?.avatar_url ? (
+          <img
+            src={post.user.avatar_url}
+            alt={post.user?.name || 'User'}
+            className="w-12 h-12 rounded-full object-cover mr-4 border border-gray-200"
+          />
+        ) : (
+          <DefaultAvatar name={post.user?.name || 'User'} size="lg" className="mr-4" />
+        )}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 mb-1">
+            <div className="text-lg font-bold hover:text-blue-600 transition-colors">{post.user?.name || 'User'}</div>
+            {post.user?.title && (
+              <span className="text-sm text-gray-600">• {post.user.title}</span>
+            )}
+          </div>
+          <div className="flex items-center gap-2 text-sm text-gray-500">
+            <span>@{post.user?.username}</span>
+            {post.user?.location && (
+              <>
+                <span>•</span>
+                <span>{post.user.location}</span>
+              </>
+            )}
+            <span>•</span>
+            <span>{new Date(post.created_at).toLocaleString()}</span>
+          </div>
+        </div>
       </div>
+      
+      {/* Post Content */}
       <div className="text-xl mb-4">{post.content}</div>
       {post.imageUrl && (
         <img

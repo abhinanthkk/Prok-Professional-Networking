@@ -2,13 +2,48 @@ from flask import Blueprint, request, jsonify, send_from_directory
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from models.post import Post, Comment
 from models.user import User
+from models.profile import Profile
 from models import db
 from datetime import datetime
 from werkzeug.utils import secure_filename
 import os
 from config import Config
+import json
+from typing import Dict, Any, Optional
 
 posts_bp = Blueprint('posts', __name__)
+
+# Simple in-memory cache
+_cache: Dict[str, Any] = {
+    'categories': None,
+    'popular_tags': None,
+    'last_updated': None
+}
+
+def get_cached_data(key: str, ttl_seconds: int = 300) -> Optional[Any]:
+    """Get cached data if it's still valid"""
+    if key not in _cache or _cache[key] is None:
+        return None
+    
+    if _cache['last_updated'] is None:
+        return None
+    
+    # Check if cache is still valid (5 minutes TTL)
+    if (datetime.utcnow() - _cache['last_updated']).total_seconds() > ttl_seconds:
+        return None
+    
+    return _cache[key]
+
+def set_cached_data(key: str, data: Any) -> None:
+    """Set cached data with timestamp"""
+    _cache[key] = data
+    _cache['last_updated'] = datetime.utcnow()
+
+def invalidate_cache() -> None:
+    """Invalidate all cached data"""
+    _cache['categories'] = None
+    _cache['popular_tags'] = None
+    _cache['last_updated'] = None
  
 @posts_bp.route('/posts', methods=['POST'])
 @jwt_required()
@@ -72,6 +107,9 @@ def create_post():
         # Ensure full URL is returned
         media_url = request.host_url.rstrip('/') + media_url
 
+    # Get user profile information
+    profile = Profile.query.filter_by(user_id=user.id).first()
+    
     return jsonify({
         'id': post.id,
         'content': post.content,
@@ -83,24 +121,81 @@ def create_post():
         'user': {
             'id': user.id,
             'name': user.name,
-            'username': user.username
+            'username': user.username,
+            'avatar_url': profile.avatar_url if profile else None,
+            'title': profile.title if profile else None,
+            'location': profile.location if profile else None
         }
     }), 201
 
 @posts_bp.route('/posts', methods=['GET'])
 @jwt_required()
 def get_posts():
-    """Get all posts with pagination"""
+    """Get all posts with pagination, filtering, and sorting"""
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
+    search = request.args.get('search', '')
+    category = request.args.get('category', '')
+    visibility = request.args.get('visibility', 'all')
+    tags = request.args.get('tags', '')
+    sort_by = request.args.get('sort_by', 'created_at')
+    sort_order = request.args.get('sort_order', 'desc')
     
-    posts = Post.query.order_by(Post.created_at.desc()).paginate(
+    # Build query
+    query = Post.query
+    
+    # Apply search filter
+    if search:
+        query = query.filter(Post.content.ilike(f'%{search}%'))
+    
+    # Apply category filter
+    if category:
+        query = query.filter(Post.category == category)
+    
+    # Apply visibility filter
+    if visibility != 'all':
+        is_public = visibility == 'public'
+        query = query.filter(Post.is_public == is_public)
+    
+    # Apply tags filter
+    if tags:
+        tag_list = [tag.strip() for tag in tags.split(',') if tag.strip()]
+        for tag in tag_list:
+            query = query.filter(Post.tags.contains(tag))
+    
+    # Apply sorting
+    if sort_by == 'created_at':
+        if sort_order == 'asc':
+            query = query.order_by(Post.created_at.asc())
+        else:
+            query = query.order_by(Post.created_at.desc())
+    elif sort_by == 'updated_at':
+        if sort_order == 'asc':
+            query = query.order_by(Post.updated_at.asc())
+        else:
+            query = query.order_by(Post.updated_at.desc())
+    elif sort_by == 'likes':
+        if sort_order == 'asc':
+            query = query.order_by(Post.likes_count.asc())
+        else:
+            query = query.order_by(Post.likes_count.desc())
+    elif sort_by == 'comments':
+        if sort_order == 'asc':
+            query = query.order_by(Post.comments_count.asc())
+        else:
+            query = query.order_by(Post.comments_count.desc())
+    else:
+        # Default sorting
+        query = query.order_by(Post.created_at.desc())
+    
+    posts = query.paginate(
         page=page, per_page=per_page, error_out=False
     )
     
     posts_data = []
     for post in posts.items:
         user = User.query.get(post.user_id)
+        profile = Profile.query.filter_by(user_id=post.user_id).first() if user else None
         media_url = post.media_url
         if media_url:
             media_url = request.host_url.rstrip('/') + media_url
@@ -115,7 +210,10 @@ def get_posts():
             'user': {
                 'id': user.id,
                 'name': user.name,
-                'username': user.username
+                'username': user.username,
+                'avatar_url': profile.avatar_url if profile else None,
+                'title': profile.title if profile else None,
+                'location': profile.location if profile else None
             } if user else None
         })
     
@@ -162,6 +260,7 @@ def get_post(post_id):
         return jsonify({'error': 'Post not found'}), 404
     
     user = User.query.get(post.user_id)
+    profile = Profile.query.filter_by(user_id=post.user_id).first() if user else None
     media_url = post.media_url
     if media_url:
         media_url = request.host_url.rstrip('/') + media_url
@@ -176,11 +275,14 @@ def get_post(post_id):
         'user': {
             'id': user.id,
             'name': user.name,
-            'username': user.username
+            'username': user.username,
+            'avatar_url': profile.avatar_url if profile else None,
+            'title': profile.title if profile else None,
+            'location': profile.location if profile else None
         } if user else None
     }), 200 
 
-@posts_bp.route('/uploads/<filename>')
+@posts_bp.route('/api/uploads/<filename>')
 def uploaded_file(filename):
     # Use absolute path for uploads directory
     upload_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'uploads'))

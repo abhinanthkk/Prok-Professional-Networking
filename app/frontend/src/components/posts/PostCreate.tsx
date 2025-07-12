@@ -20,11 +20,15 @@ const PostCreate: React.FC = () => {
   const [showPreview, setShowPreview] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  console.log('PostCreate rendered');
+
   const handleMediaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      console.log('Selected file:', file);
       setMedia(file);
       const url = URL.createObjectURL(file);
+      console.log('Preview URL:', url);
       if (file.type.startsWith('image/')) {
         setMediaPreview({ url, type: 'image' });
       } else if (file.type.startsWith('video/')) {
@@ -71,11 +75,12 @@ const PostCreate: React.FC = () => {
     setLoading(true);
     try {
       // Send allowComments and isPublic as part of the post creation payload
-      await postsApi.createPost(body, media || undefined, {
+      const response = await postsApi.createPost(body, media || undefined, {
         allow_comments: allowComments,
         is_public: isPublic,
         title: title
       });
+      console.log('Post create API response:', response);
       setLoading(false);
       setTitle('');
       setBody('');
@@ -154,6 +159,7 @@ const PostCreate: React.FC = () => {
               type="file"
               accept="image/*,video/*"
               onChange={handleMediaChange}
+              onClick={() => console.log('File input clicked')}
               ref={fileInputRef}
               disabled={loading}
               className="hidden"

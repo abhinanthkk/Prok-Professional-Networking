@@ -82,9 +82,24 @@ export interface Post {
   id: number;
   user_id: number;
   content: string;
+  title?: string;
+  media_url?: string;
+  is_public: boolean;
+  allow_comments: boolean;
   created_at: string;
+  updated_at: string;
   likes: number;
   comments: Comment[];
+  user: {
+    id: number;
+    name: string;
+    username: string;
+    avatar_url?: string;
+    title?: string;
+    location?: string;
+  };
+  tags?: string[];
+  category?: string;
 }
 
 export interface Comment {

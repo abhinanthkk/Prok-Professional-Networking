@@ -11,6 +11,10 @@ export default {
           DEFAULT: '#4F46E5', // Indigo-600
           hover: '#4338CA',   // Indigo-700
         },
+        secondary: {
+          DEFAULT: '#6B7280', // Gray-500
+          hover: '#4B5563',   // Gray-600
+        },
       },
     },
   },

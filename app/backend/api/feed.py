@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from models.post import Post
 from models.user import User
+from models.profile import Profile
 from models import db
 
 feed_bp = Blueprint('feed', __name__)
@@ -27,18 +28,29 @@ def get_feed():
     posts_data = []
     for post in posts.items:
         post_user = User.query.get(post.user_id)
+        profile = Profile.query.filter_by(user_id=post.user_id).first() if post_user else None
+        
+        # Get media URL with full path
+        media_url = post.media_url
+        if media_url:
+            media_url = request.host_url.rstrip('/') + media_url
+            
         posts_data.append({
             'id': post.id,
             'content': post.content,
-            'media_url': post.media_url,
+            'media_url': media_url,
+            'imageUrl': media_url,  # For compatibility
             'user_id': post.user_id,
             'created_at': post.created_at.isoformat(),
-            'likes_count': post.likes_count,
-            'comments_count': post.comments_count,
+            'likes_count': post.likes_count if hasattr(post, 'likes_count') else 0,
+            'comments_count': post.comments_count if hasattr(post, 'comments_count') else 0,
             'user': {
                 'id': post_user.id,
                 'name': post_user.name,
-                'username': post_user.username
+                'username': post_user.username,
+                'avatar_url': profile.avatar_url if profile else None,
+                'title': profile.title if profile else None,
+                'location': profile.location if profile else None
             } if post_user else None
         })
     
@@ -68,17 +80,29 @@ def get_user_feed(user_id):
     
     posts_data = []
     for post in posts.items:
+        profile = Profile.query.filter_by(user_id=user_id).first()
+        
+        # Get media URL with full path
+        media_url = post.media_url
+        if media_url:
+            media_url = request.host_url.rstrip('/') + media_url
+            
         posts_data.append({
             'id': post.id,
             'content': post.content,
+            'media_url': media_url,
+            'imageUrl': media_url,  # For compatibility
             'user_id': post.user_id,
             'created_at': post.created_at.isoformat(),
-            'likes_count': post.likes_count,
-            'comments_count': post.comments_count,
+            'likes_count': post.likes_count if hasattr(post, 'likes_count') else 0,
+            'comments_count': post.comments_count if hasattr(post, 'comments_count') else 0,
             'user': {
                 'id': user.id,
                 'name': user.name,
-                'username': user.username
+                'username': user.username,
+                'avatar_url': profile.avatar_url if profile else None,
+                'title': profile.title if profile else None,
+                'location': profile.location if profile else None
             }
         })
     
