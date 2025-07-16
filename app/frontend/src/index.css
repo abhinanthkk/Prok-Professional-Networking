@@ -32,7 +32,7 @@ body {
     @apply px-4 py-2 font-medium transition-colors rounded-md;
   }
   .btn-primary {
-    @apply text-white bg-primary hover:bg-primary-hover;
+    @apply text-white bg-primary hover:bg-primary/80;
   }
   .btn-secondary {
     @apply text-white bg-secondary hover:bg-secondary-hover;
