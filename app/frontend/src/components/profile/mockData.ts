@@ -81,14 +81,29 @@ export const mockActivity: UserActivity[] = [
     type: "post",
     content: "Just published a new article about React performance optimization techniques. Check it out!",
     created_at: "2024-01-15T14:30:00Z",
-    related_post: {
-      id: 1,
-      user_id: 1,
-      content: "Just published a new article about React performance optimization techniques. Check it out!",
-      created_at: "2024-01-15T14:30:00Z",
-      likes: 24,
-      comments: []
-    }
+          related_post: {
+        id: 1,
+        user_id: 1,
+        content: "Just published a new article about React performance optimization techniques. Check it out!",
+        title: "React Performance Optimization",
+        media_url: undefined,
+        is_public: true,
+        allow_comments: true,
+        created_at: "2024-01-15T14:30:00Z",
+        updated_at: "2024-01-15T14:30:00Z",
+        likes: 24,
+        comments: [],
+        user: {
+          id: 1,
+          name: "John Doe",
+          username: "johndoe",
+          avatar_url: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+          title: "Senior Software Engineer",
+          location: "San Francisco, CA"
+        },
+        tags: [],
+        category: undefined
+      } as any
   },
   {
     id: 2,

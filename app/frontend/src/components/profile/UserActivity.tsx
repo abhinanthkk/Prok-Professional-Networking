@@ -155,7 +155,7 @@ export const UserActivity: React.FC<UserActivityProps> = ({
       </div>
       
       <div className="divide-y divide-gray-100">
-        {visibleActivities.map((activity, index) => (
+        {visibleActivities.map((activity) => (
           <div key={activity.id} className="p-4 hover:bg-gray-50 transition-colors">
             <div className="flex space-x-3">
               {getActivityIcon(activity.type)}

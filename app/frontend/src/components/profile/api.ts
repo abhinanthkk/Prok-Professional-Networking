@@ -17,36 +17,36 @@ export const profileApi = {
     return api.uploadProfileImage(file);
   },
 
-  getUserActivity: async (userId?: string, page: number = 1, limit: number = 10) => {
+  getUserActivity: async () => {
     // This endpoint needs to be implemented in the backend
     throw new Error('User activity endpoint not implemented yet');
   },
 
-  getConnections: async (userId?: string) => {
+  getConnections: async () => {
     // This endpoint needs to be implemented in the backend
     throw new Error('Connections endpoint not implemented yet');
   },
 
-  sendConnectionRequest: async (userId: string) => {
+  sendConnectionRequest: async () => {
     // This endpoint needs to be implemented in the backend
     throw new Error('Connection requests not implemented yet');
   },
 
-  acceptConnectionRequest: async (requestId: string) => {
+  acceptConnectionRequest: async () => {
     // This endpoint needs to be implemented in the backend
     throw new Error('Connection requests not implemented yet');
   },
 
-  rejectConnectionRequest: async (requestId: string) => {
+  rejectConnectionRequest: async () => {
     // This endpoint needs to be implemented in the backend
     throw new Error('Connection requests not implemented yet');
   },
 
-  followUser: async (userId: string) => {
+  followUser: async () => {
     // TODO: Implement backend endpoint and call it here
     throw new Error('Follow user endpoint not implemented yet');
   },
-  unfollowUser: async (userId: string) => {
+  unfollowUser: async () => {
     // TODO: Implement backend endpoint and call it here
     throw new Error('Unfollow user endpoint not implemented yet');
   }

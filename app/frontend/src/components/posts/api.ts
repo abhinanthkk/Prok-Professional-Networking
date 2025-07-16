@@ -18,7 +18,7 @@ export const postsApi = {
     const result = await api.createPost(content, media, options);
     return {
       ...result,
-      media_url: result.imageUrl || result.media_url || null,
+      media_url: result.imageUrl || result.media_url,
     };
   },
 
@@ -58,7 +58,7 @@ export const postsApi = {
     const data = await response.json();
     const posts = (data.posts || []).map((post: any) => ({
       ...post,
-      media_url: post.imageUrl || post.media_url || null,
+      media_url: post.imageUrl || post.media_url || undefined,
     }));
     return { ...data, posts };
   },

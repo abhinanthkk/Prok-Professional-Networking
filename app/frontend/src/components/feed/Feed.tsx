@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { feedApi } from './api';
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import 'quill/dist/quill.snow.css';
 import { postsApi } from '../posts/api';
 import type { Comment } from '../posts/api';
 import { useAuth } from '../../context/AuthContext';
@@ -23,27 +23,19 @@ interface Post {
   liked_by_current_user?: boolean; // <-- Add this field
 }
 
-const isImage = (url: string) => /\.(jpg|jpeg|png|gif)$/i.test(url);
-const isVideo = (url: string) => /\.(mp4|webm)$/i.test(url);
+
 
 interface MediaPreview {
   url: string;
   type: 'image' | 'video';
 }
 
-// Add placeholder data for followers, who liked, and link preview
-const placeholderFollowers = 83414;
+// Add placeholder data for who liked
 const placeholderWhoLiked = [
   { name: 'Alice', avatar_url: 'https://randomuser.me/api/portraits/women/1.jpg' },
   { name: 'Bob', avatar_url: 'https://randomuser.me/api/portraits/men/2.jpg' },
   { name: 'Carol', avatar_url: 'https://randomuser.me/api/portraits/women/3.jpg' },
 ];
-const placeholderLinkPreview = {
-  url: 'https://homeinstead.com',
-  title: 'How to Talk with Your Employer about Caregiving',
-  image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=200&fit=crop',
-  description: 'homeinstead.com',
-};
 
 // Utility to sanitize post HTML and strip placeholder/broken links
 function sanitizePostHtml(html: string): string {
@@ -53,7 +45,7 @@ function sanitizePostHtml(html: string): string {
 }
 
 // Helper for LinkedIn-style card preview (used in both feed and preview)
-function PostCard({ post, showActions = true, children, likeLoading, handleLike }: { post: any, showActions?: boolean, children?: React.ReactNode, likeLoading?: any, handleLike?: any }) {
+function PostCard({ post, showActions = true, likeLoading, handleLike }: { post: any, showActions?: boolean, likeLoading?: any, handleLike?: any }) {
   const [isFollowing, setIsFollowing] = React.useState(false);
   const [followLoading, setFollowLoading] = React.useState(false);
 
@@ -61,7 +53,7 @@ function PostCard({ post, showActions = true, children, likeLoading, handleLike 
     setFollowLoading(true);
     try {
       // TODO: Replace with actual userId and backend call
-      await profileApi.followUser(post.user.id.toString());
+      await profileApi.followUser();
       setIsFollowing(true);
     } catch (err) {
       // Optionally show error
@@ -175,20 +167,7 @@ function PostCard({ post, showActions = true, children, likeLoading, handleLike 
   );
 }
 
-function getMediaType(media_url: string | undefined): 'image' | 'video' | undefined {
-  if (!media_url) return undefined;
-  const ext = media_url.split('.').pop()?.toLowerCase();
-  if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext || '')) return 'image';
-  if (['mp4', 'webm', 'ogg'].includes(ext || '')) return 'video';
-  return undefined;
-}
 
-function getMediaUrl(media_url: string | undefined): string | undefined {
-  if (!media_url) return undefined;
-  if (media_url.startsWith('http://') || media_url.startsWith('https://')) return media_url;
-  // Always prepend backend base URL if not absolute
-  return `http://localhost:5000${media_url}`;
-}
 
 const Feed: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -204,17 +183,7 @@ const Feed: React.FC = () => {
   const [showPreview, setShowPreview] = useState(false);
   const [likeLoading, setLikeLoading] = useState<{[key: number]: boolean}>({});
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [expandedComments, setExpandedComments] = useState<{[key: number]: boolean}>({});
-  const [comments, setComments] = useState<{[key: number]: Comment[]}>({});
-  const [commentInputs, setCommentInputs] = useState<{[key: number]: string}>({});
-  const [commentLoading, setCommentLoading] = useState<{[key: number]: boolean}>({});
-  const [commentError, setCommentError] = useState<{[key: number]: string | null}>({});
   const { user: currentUser } = useAuth();
-  const [editingComment, setEditingComment] = useState<{[key: number]: number | null}>({});
-  const [editInputs, setEditInputs] = useState<{[key: number]: string}>({});
-  const [editLoading, setEditLoading] = useState<{[key: number]: boolean}>({});
-  const [deleteLoading, setDeleteLoading] = useState<{[key: number]: boolean}>({});
-  const [deleteConfirm, setDeleteConfirm] = useState<{postId: number, commentId: number} | null>(null);
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
   const showToast = (message: string, type: 'success' | 'error' = 'success') => {
@@ -310,86 +279,7 @@ const Feed: React.FC = () => {
     }
   };
 
-  const handleToggleComments = async (postId: number) => {
-    setExpandedComments(prev => ({ ...prev, [postId]: !prev[postId] }));
-    if (!expandedComments[postId]) {
-      setCommentLoading(prev => ({ ...prev, [postId]: true }));
-      try {
-        const fetched = await postsApi.getComments(postId);
-        setComments(prev => ({ ...prev, [postId]: fetched }));
-        setCommentError(prev => ({ ...prev, [postId]: null }));
-      } catch (err: any) {
-        setCommentError(prev => ({ ...prev, [postId]: err.message || 'Failed to load comments' }));
-      } finally {
-        setCommentLoading(prev => ({ ...prev, [postId]: false }));
-      }
-    }
-  };
 
-  const handleAddComment = async (postId: number) => {
-    const content = commentInputs[postId]?.trim();
-    if (!content) return;
-    setCommentLoading(prev => ({ ...prev, [postId]: true }));
-    try {
-      const newComment = await postsApi.addComment(postId, content);
-      setComments(prev => ({ ...prev, [postId]: [...(prev[postId] || []), newComment] }));
-      setCommentInputs(prev => ({ ...prev, [postId]: '' }));
-      setCommentError(prev => ({ ...prev, [postId]: null }));
-    } catch (err: any) {
-      setCommentError(prev => ({ ...prev, [postId]: err.message || 'Failed to add comment' }));
-    } finally {
-      setCommentLoading(prev => ({ ...prev, [postId]: false }));
-    }
-  };
-
-  const handleEditComment = (postId: number, commentId: number, content: string) => {
-    setEditingComment(prev => ({ ...prev, [postId]: commentId }));
-    setEditInputs(prev => ({ ...prev, [commentId]: content }));
-  };
-
-  const handleEditSubmit = async (postId: number, commentId: number) => {
-    const content = editInputs[commentId]?.trim();
-    if (!content) return;
-    setEditLoading(prev => ({ ...prev, [commentId]: true }));
-    try {
-      const updated = await postsApi.editComment(postId, commentId, content);
-      setComments(prev => ({
-        ...prev,
-        [postId]: prev[postId].map(c => c.id === commentId ? { ...c, content: updated.content } : c)
-      }));
-      setEditingComment(prev => ({ ...prev, [postId]: null }));
-      showToast('Comment updated', 'success');
-    } catch {
-      showToast('Failed to update comment', 'error');
-    }
-    setEditLoading(prev => ({ ...prev, [commentId]: false }));
-  };
-
-  const handleDeleteComment = async (postId: number, commentId: number) => {
-    setDeleteConfirm({ postId, commentId });
-  };
-
-  const confirmDeleteComment = async () => {
-    if (!deleteConfirm) return;
-    const { postId, commentId } = deleteConfirm;
-    setDeleteLoading(prev => ({ ...prev, [commentId]: true }));
-    try {
-      await postsApi.deleteComment(postId, commentId);
-      setComments(prev => ({
-        ...prev,
-        [postId]: prev[postId].filter(c => c.id !== commentId)
-      }));
-      setDeleteConfirm(null);
-      showToast('Comment deleted', 'success');
-    } catch {
-      showToast('Failed to delete comment', 'error');
-    }
-    setDeleteLoading(prev => ({ ...prev, [commentId]: false }));
-  };
-
-  const cancelDeleteComment = () => {
-    setDeleteConfirm(null);
-  };
 
   return (
     <div className="min-h-screen bg-[#f3f2ef] py-8">
@@ -513,26 +403,7 @@ const Feed: React.FC = () => {
           ))
         )}
       </div>
-      {/* Delete Confirmation Modal */}
-      {deleteConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
-          <div className="bg-white rounded-lg shadow-lg p-6 max-w-sm w-full">
-            <h3 className="text-lg font-semibold mb-4">Delete Comment</h3>
-            <p className="mb-6">Are you sure you want to delete this comment? This action cannot be undone.</p>
-            <div className="flex justify-end gap-2">
-              <button
-                className="px-4 py-2 rounded border border-gray-300 text-gray-700 hover:bg-gray-50"
-                onClick={cancelDeleteComment}
-              >Cancel</button>
-              <button
-                className="bg-red-600 text-white px-4 py-2 rounded disabled:opacity-50"
-                onClick={confirmDeleteComment}
-                disabled={deleteLoading[deleteConfirm.commentId]}
-              >{deleteLoading[deleteConfirm.commentId] ? 'Deleting...' : 'Delete'}</button>
-            </div>
-          </div>
-        </div>
-      )}
+
       {/* Toast Notification */}
       {toast && (
         <div className={`fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded shadow-lg text-white transition-all ${toast.type === 'success' ? 'bg-green-600' : 'bg-red-600'}`}>

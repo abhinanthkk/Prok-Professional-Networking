@@ -2,7 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { MemoryRouter } from 'react-router-dom';
 import PostList from './PostList';
-import React from 'react';
+
 import { describe, it, expect, vi } from 'vitest';
 
 // Mock the posts API

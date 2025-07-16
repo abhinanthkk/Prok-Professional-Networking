@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { feedApi } from './api';
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import 'quill/dist/quill.snow.css';
 import { postsApi } from '../posts/api';
 import type { Comment } from '../posts/api';
 import { useAuth } from '../../context/AuthContext';
 import { profileApi } from '../profile/api';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import DefaultAvatar from '../ui/DefaultAvatar';
 import LoadingSpinner from '../ui/LoadingSpinner';
 import LinkedInSidebar from './LinkedInSidebar';
@@ -15,10 +15,7 @@ import {
   ChatBubbleLeftEllipsisIcon, 
   ArrowPathIcon, 
   PaperAirplaneIcon,
-  EllipsisHorizontalIcon,
-  HeartIcon,
-  EyeIcon,
-  ShareIcon
+  EllipsisHorizontalIcon
 } from '@heroicons/react/24/outline';
 import { HandThumbUpIcon as HandThumbUpSolid, HeartIcon as HeartSolid } from '@heroicons/react/24/solid';
 
@@ -42,15 +39,7 @@ interface Post {
   liked_by_current_user?: boolean;
 }
 
-// Extended User interface to match AuthContext
-interface ExtendedUser {
-  id: number;
-  name: string;
-  email: string;
-  username: string;
-  avatar_url?: string;
-  profileImage?: string;
-}
+
 
 interface MediaPreview {
   url: string;
@@ -67,7 +56,7 @@ const LinkedInPostCard: React.FC<{
   likeLoading: boolean;
   showComments?: boolean;
   comments?: Comment[];
-  onToggleComments?: (postId: number) => void;
+
   onAddComment?: (postId: number, content: string) => void;
   commentInput?: string;
   onCommentInputChange?: (postId: number, value: string) => void;
@@ -81,7 +70,6 @@ const LinkedInPostCard: React.FC<{
   likeLoading,
   showComments = false,
   comments = [],
-  onToggleComments,
   onAddComment,
   commentInput = '',
   onCommentInputChange,
@@ -98,7 +86,7 @@ const LinkedInPostCard: React.FC<{
     e.stopPropagation();
     setFollowLoading(true);
     try {
-      await profileApi.followUser(post.user.id.toString());
+      await profileApi.followUser();
       setIsFollowing(true);
     } catch (err) {
       console.error('Failed to follow user:', err);
@@ -130,7 +118,7 @@ const LinkedInPostCard: React.FC<{
     return `http://localhost:5000${mediaUrl}`;
   };
 
-  const mediaUrl = getMediaUrl(post.imageUrl || post.media_url);
+
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-4 max-w-2xl mx-auto">
@@ -239,7 +227,10 @@ const LinkedInPostCard: React.FC<{
           </div>
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1">
-              <EyeIcon className="w-4 h-4" />
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
               <span>1.2k views</span>
             </span>
             <span>• 5 reposts</span>

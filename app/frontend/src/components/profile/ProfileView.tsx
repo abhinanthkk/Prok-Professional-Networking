@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ProfileHeader } from './ProfileHeader';
 import { ProfileInfo } from './ProfileInfo';
-import { UserActivity } from './UserActivity';
+
 import { mockActivity } from './mockData';
 import type { Profile, User, UserActivity as UserActivityType } from '../../types';
 import { profileApi } from './api';
@@ -11,10 +11,9 @@ import { useAuth } from '../../context/AuthContext';
 const ProfileView: React.FC = () => {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [user, setUser] = useState<User | null>(null);
-  const [activities, setActivities] = useState<UserActivityType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isOwnProfile, setIsOwnProfile] = useState(true);
+  const [isOwnProfile] = useState(true);
   const { token } = useAuth();
   const navigate = useNavigate();
 
@@ -72,7 +71,6 @@ const ProfileView: React.FC = () => {
         
         setProfile(profileData);
         setUser(userData);
-        setActivities(mockActivity); // Keep mock activity for now
         
       } catch (err) {
         setError('Failed to load profile data');
@@ -94,9 +92,7 @@ const ProfileView: React.FC = () => {
     navigate('/profile/edit');
   };
 
-  const handleLoadMoreActivity = async () => {
-    await new Promise(resolve => setTimeout(resolve, 500));
-  };
+
 
   if (isLoading) {
     return (
