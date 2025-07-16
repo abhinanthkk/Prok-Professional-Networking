@@ -62,106 +62,25 @@ function PostCard({ post, showActions = true, likeLoading, handleLike }: { post:
     }
   };
   return (
-    <div className="bg-white rounded-2xl shadow border border-gray-200 p-0 mb-4 max-w-2xl mx-auto hover:shadow-lg transition">
+    <div className="bg-surface rounded-2xl shadow-md border border-gray-100 p-4 mb-4 max-w-2xl mx-auto hover:shadow-lg transition-all font-sans text-text">
       <Link to={`/posts/${post.id}`} className="block focus:outline-none">
         {/* Header */}
-        <div className="flex items-start px-6 pt-6 pb-2">
-          <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-700 text-xl mr-3 border-2 border-white shadow">
-            {post.user?.avatar_url ? (
-              <img src={post.user.avatar_url} alt={post.user.name} className="w-12 h-12 rounded-full object-cover" />
-            ) : (
-              post.user?.name ? post.user.name[0] : 'A'
-            )}
+        <div className="flex items-center gap-3 mb-2">
+          <img src={post.user?.avatar_url} alt={post.user?.name} className="w-12 h-12 rounded-full object-cover border-2 border-primary" />
+          <div>
+            <div className="font-semibold text-text">{post.user?.name}</div>
+            <div className="text-sm text-gray-500">@{post.user?.username}</div>
           </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2">
-              <span className="font-semibold text-gray-900 text-base truncate">{post.user?.name || 'User'}</span>
-              {/* <span className="text-xs text-gray-500">• {placeholderFollowers.toLocaleString()} followers</span> */}
-              <button
-                className={`ml-2 px-3 py-1 rounded-full border border-[#0a66c2] text-xs font-semibold transition ${isFollowing ? 'bg-[#0a66c2] text-white' : 'text-[#0a66c2] hover:bg-blue-50'}`}
-                onClick={handleFollow}
-                disabled={isFollowing || followLoading}
-              >
-                {isFollowing ? 'Following' : followLoading ? 'Following...' : 'Follow'}
-              </button>
-            </div>
-            <div className="flex items-center gap-2 text-xs text-gray-500 mt-0.5">
-              <span>@{post.user?.username || 'username'}</span>
-              <span>• {post.created_at ? new Date(post.created_at).toLocaleDateString() : ''}</span>
-              <span>• 3d</span>
-            </div>
-          </div>
-          <button className="ml-2 p-2 rounded-full hover:bg-gray-100 transition">
-            <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="6" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="18" r="1.5"/></svg>
-          </button>
+          <button className="ml-auto px-4 py-1 rounded-full bg-primary text-white font-semibold hover:bg-blue-700 transition">Connect</button>
         </div>
-        {/* Content */}
-        <div className="px-6 pb-2 pt-1">
-          {post.title && <div className="font-bold text-lg mb-1">{post.title}</div>}
-          <div className="prose max-w-full text-gray-900 mb-2" dangerouslySetInnerHTML={{ __html: sanitizePostHtml(post.content || '') }} />
-          {post.imageUrl && (
-            <img
-              src={post.imageUrl}
-              alt="Post"
-              className="w-full max-h-[400px] object-cover rounded-xl mt-2"
-            />
-          )}
-          {/* Hashtags (example) */}
-          {/* <div className="mt-2 text-[#0a66c2] font-medium text-sm space-x-2">
-            <span>#HomeInstead</span>
-            <span>#Caregiving</span>
-            <span>#HomeCare</span>
-            <span>#Support</span>
-          </div> */}
-        </div>
-        {/* Link Preview (placeholder) */}
-        {/* <div className="px-6 pb-2">
-          <a href={placeholderLinkPreview.url} target="_blank" rel="noopener noreferrer" className="block border rounded-xl overflow-hidden hover:shadow transition">
-            <div className="flex">
-              <img src={placeholderLinkPreview.image} alt="Preview" className="w-28 h-20 object-cover" />
-              <div className="flex-1 p-3">
-                <div className="font-semibold text-gray-900 text-sm mb-1">{placeholderLinkPreview.title}</div>
-                <div className="text-xs text-gray-500">{placeholderLinkPreview.description}</div>
-              </div>
-            </div>
-          </a>
-        </div> */}
-        {/* Engagement Bar (avatars, like/comment counts) */}
-        <div className="px-6 pt-2 pb-1 flex items-center gap-2">
-          <div className="flex -space-x-2">
-            {placeholderWhoLiked.map((u, i) => (
-              <img key={i} src={u.avatar_url} alt={u.name} className="w-6 h-6 rounded-full border-2 border-white object-cover" />
-            ))}
-          </div>
-          <span className="text-sm text-gray-600 ml-2">{post.likes_count || 0} • 1 comment • 10 reposts</span>
-        </div>
-        {/* Divider */}
-        <div className="border-t border-gray-100 mt-2" />
-        {/* Footer: Action Bar */}
-        {showActions && (
-          <div className="flex items-center justify-around px-2 py-1">
-            <button className={`flex items-center gap-1 font-medium px-4 py-2 rounded-full transition-colors select-none ${post.liked_by_current_user ? 'text-[#0a66c2] bg-blue-50' : 'text-gray-600 hover:text-[#0a66c2] hover:bg-blue-50'} ${likeLoading?.[post.id] ? 'opacity-50 cursor-not-allowed' : ''}`}
-              onClick={() => handleLike?.(post.id)}
-              disabled={likeLoading?.[post.id] || post.liked_by_current_user}
-              title={post.liked_by_current_user ? 'You have liked this post' : 'Like'}
-            >
-              <svg className="w-5 h-5" fill={post.liked_by_current_user ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 9l-2-2-2 2m0 6l2 2 2-2" /></svg>
-              Like
-            </button>
-            <button className="flex items-center gap-1 text-gray-600 hover:text-[#0a66c2] font-medium px-4 py-2 rounded-full transition-colors">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2v-8a2 2 0 012-2h2m10-4h-4m0 0V4m0 4V4" /></svg>
-              Comment
-            </button>
-            <button className="flex items-center gap-1 text-gray-600 hover:text-[#0a66c2] font-medium px-4 py-2 rounded-full transition-colors">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v16h16V4H4zm4 4h8v8H8V8z" /></svg>
-              Repost
-            </button>
-            <button className="flex items-center gap-1 text-gray-600 hover:text-[#0a66c2] font-medium px-4 py-2 rounded-full transition-colors">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4m16-4V7a2 2 0 00-2-2H5a2 2 0 00-2 2v4" /></svg>
-              Send
-            </button>
-          </div>
+        <div className="text-text mb-2">{post.content}</div>
+        {post.imageUrl && (
+          <img src={post.imageUrl} alt="Post" className="w-full rounded-xl mt-2" />
         )}
+        <div className="flex gap-4 mt-3">
+          <button className="flex-1 py-2 rounded-xl bg-background hover:bg-primary/10 text-primary font-medium transition">Like</button>
+          <button className="flex-1 py-2 rounded-xl bg-background hover:bg-accent/10 text-accent font-medium transition">Comment</button>
+        </div>
       </Link>
     </div>
   );

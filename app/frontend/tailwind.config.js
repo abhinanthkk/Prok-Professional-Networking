@@ -6,18 +6,18 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+      },
       colors: {
-        primary: {
-          DEFAULT: '#4F46E5', // Indigo-600
-          hover: '#4338CA',   // Indigo-700
-        },
-        secondary: {
-          DEFAULT: '#6B7280', // Gray-500
-          hover: '#4B5563',   // Gray-600
-        },
+        primary: { DEFAULT: '#2563eb' },      // blue-600
+        secondary: { DEFAULT: '#10b981' },    // green-500
+        accent: { DEFAULT: '#f59e0b' },       // amber-500
+        background: { DEFAULT: '#f9fafb' },   // gray-50
+        surface: { DEFAULT: '#ffffff' },
+        text: { DEFAULT: '#111827' },         // gray-900
       },
     },
   },
-  // darkMode: 'class',
   plugins: [],
 } 
