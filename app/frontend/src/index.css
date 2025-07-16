@@ -35,7 +35,7 @@ body {
     @apply text-white bg-primary hover:bg-primary/80;
   }
   .btn-secondary {
-    @apply text-white bg-secondary hover:bg-secondary-hover;
+    @apply text-white bg-secondary hover:bg-secondary/80;
   }
   .input {
     @apply px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent;
