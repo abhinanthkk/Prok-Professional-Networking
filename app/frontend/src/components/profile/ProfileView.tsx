@@ -199,6 +199,13 @@ const ProfileView: React.FC = () => {
 
       {/* Main Content */}
       <main className="flex-1 max-w-2xl mx-auto p-4 space-y-6">
+        {/* Profile Card - add this at the top of the main return or in ProfileHeader */}
+        <div className="bg-surface rounded-2xl shadow-md p-6 flex flex-col items-center gap-3 max-w-sm mx-auto font-sans text-text mt-6">
+          <img src={profile.avatar_url} alt={user.name} className="w-24 h-24 rounded-full border-4 border-primary shadow" />
+          <div className="font-bold text-xl text-text">{user.name}</div>
+          <div className="text-secondary">{profile.title}</div>
+          <button className="mt-2 px-6 py-2 rounded-full bg-primary text-white font-semibold hover:bg-blue-700 transition">Follow</button>
+        </div>
         <ProfileInfo profile={profile} />
         {/* Recommendations Card */}
         <div className="bg-white rounded-xl shadow p-6 border border-gray-100">

@@ -96,6 +96,16 @@ const PostCreate: React.FC = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 py-8">
+      {/* Post Creation Box - add this at the top of the main return */}
+      <div className="bg-surface rounded-2xl shadow-md p-4 mb-4 max-w-2xl mx-auto font-sans text-text">
+        <textarea
+          className="w-full min-h-[80px] rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 p-3 text-text transition"
+          placeholder="What's on your mind?"
+        />
+        <div className="flex justify-end mt-2">
+          <button className="px-6 py-2 rounded-full bg-primary text-white font-semibold hover:bg-blue-700 transition">Post</button>
+        </div>
+      </div>
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-xl bg-white rounded-xl shadow p-8 flex flex-col gap-6"
