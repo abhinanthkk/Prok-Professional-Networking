@@ -22,9 +22,9 @@ Here are the proposed database tables and their key fields, along with relations
     * `bio`: TEXT - (Nullable) A short description or autobiography for the user's profile.
     * `skills`: TEXT - (Nullable) A comma-separated string or JSON string of skills.
 
-#### 2. Post Table
-
-* **Purpose:** Stores all user-generated content for the feed.
+#### 2. P
+* **Purpose:** Stores all user-generated content fost Table
+or the feed.
 * **Fields:**
     * `id`: INTEGER PRIMARY KEY - Unique identifier for each post.
     * `content`: TEXT NOT NULL - The main text content of the post.

@@ -1,3 +1,19 @@
+# Prok-Professional-Networking Frontend
+
+## Troubleshooting: API Connection Errors
+
+If you see errors like `Failed to load resource: net::ERR_CONNECTION_REFUSED` to `localhost:5000` in production, it means your frontend is trying to connect to a backend that does not exist in the cloud environment.
+
+**How to fix:**
+1. Go to your deployment dashboard (e.g., Render).
+2. Set the environment variable:
+   - `VITE_API_URL=https://prok-professional-networking-xkk6.onrender.com` (replace with your backend URL)
+3. Redeploy your frontend service.
+
+This will ensure your frontend talks to the correct backend in production.
+
+---
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
